@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Django</title>
-</head>
-<body>
-<h1>Django Example</h1>
+	<head>
+		<meta charset="UTF-8">
+		<title>Django</title>
+	</head>
+	<body>
+		<h1>Django Example</h1>
 
-<form method="POST">
-{% csrf_token %}
-<input type="text" name="guess" id="guess">
-<input id="fetch-call" type="submit" value="Envoyer">
-</form>
-<p id="reponse">
+		<form method="POST">
+			{% csrf_token %}
+			<input type="text" name="guess" id="guess">
+			<input id="fetch-call" type="submit" value="Envoyer">
+		</form>
+		<p id="reponse">
 
-</p>
+		</p>
 
-<script>
+		<script>
 
-	document.querySelector("#fetch-call").addEventListener("click", event => {
-			event.preventDefault();
+			document.querySelector("#fetch-call").addEventListener("click", event => {
+							event.preventDefault();
 
-			let form = new FormData();
+							let form = new FormData();
 
-			form.append("guess", document.querySelector("#guess").value);
+							form.append("guess", document.querySelector("#guess").value);
 
-			let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-			let request = new Request("{% url 'compute' %}", {method: 'POST',
-					body: form,
-        				headers: {'X-CSRFToken': csrfTokenValue}});
-			fetch(request)
-				.then(response => response.json())
-				.then(result => {
-						let resultParagraph = document.querySelector("#reponse");
-						resultParagraph.innerHTML = result[""];
-					})
-		})
+							let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+							let request = new Request("{% url 'compute' %}", {method: 'POST',
+											body: form,
+											headers: {'X-CSRFToken': csrfTokenValue}});
+							fetch(request)
+								.then(response => response.json())
+								.then(result => {
+												let resultParagraph = document.querySelector("#reponse");
+												resultParagraph.innerHTML = result["reponse"];
+											})
+						})
 
-</script>
+		</script>
 
-</body>
+	</body>
 </html>

@@ -24,6 +24,7 @@ def index(request):
 
 def compute(request):
     guess = request.POST.get("guess")
+    print(guess)
     if guess == mystery_word_orth:
         return JsonResponse({"reponse": "Bien Joué" })
 
