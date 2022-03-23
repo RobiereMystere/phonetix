@@ -1,43 +1,44 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<title>Phonetix</title>
-	</head>
-	<body>
-		<h1>Phonetix</h1>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
-		<form method="POST">
-			{% csrf_token %}
-			<input type="text" name="guess" id="guess">
-			<input id="fetch-call" type="submit" value="Envoyer">
-		</form>
-		<p id="reponse">
 
-		</p>
+<title>Phonetix</title>
+<h1 class="text-center">Phonetix</h1>
 
-		<script>
+<div class="text-center">
 
-			document.querySelector("#fetch-call").addEventListener("click", event => {
-							event.preventDefault();
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" name="guess" id="guess">
+		<input id="fetch-call" type="submit" value="Envoyer">
+	</form>
+	<p id="reponse">
 
-							let form = new FormData();
+	</p>
 
-							form.append("guess", document.querySelector("#guess").value);
+	<script>
 
-							let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
-							let request = new Request("{% url 'compute' %}", {method: 'POST',
-											body: form,
-											headers: {'X-CSRFToken': csrfTokenValue}});
-							fetch(request)
-								.then(response => response.json())
-								.then(result => {
-												let resultParagraph = document.querySelector("#reponse");
-												resultParagraph.innerHTML = result["reponse"];
-											})
-						})
+		document.querySelector("#fetch-call").addEventListener("click", event => {
+					event.preventDefault();
 
-		</script>
+					let form = new FormData();
 
-	</body>
-</html>
+					form.append("guess", document.querySelector("#guess").value);
+
+					let csrfTokenValue = document.querySelector('[name=csrfmiddlewaretoken]').value;
+					let request = new Request("{% url 'compute' %}", {method: 'POST',
+								body: form,
+								headers: {'X-CSRFToken': csrfTokenValue}});
+					fetch(request)
+						.then(response => response.json())
+						.then(result => {
+									let resultParagraph = document.querySelector("#reponse");
+									resultParagraph.innerHTML = result["reponse"];
+								})
+				})
+
+	</script>
+</div>
+{% endblock %}
+

@@ -25,10 +25,12 @@ def index(request):
 def compute(request):
     guess = request.POST.get("guess")
     print(guess)
+    if guess == "-abandon!":
+        return JsonResponse({"reponse": "Le mot était "+mystery_word_orth })
     if guess == mystery_word_orth:
         return JsonResponse({"reponse": "Bien Joué" })
 
-
+    
     word_line = wa.find_word(guess)
 
     print(word_line)
