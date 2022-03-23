@@ -6,16 +6,17 @@
 <title>Phonetix</title>
 <h1 class="text-center">Phonetix</h1>
 
-<div class="text-center">
-
-	<form method="POST">
-		{% csrf_token %}
-		<input type="text" name="guess" id="guess">
-		<input id="fetch-call" type="submit" value="Envoyer">
-	</form>
-	<p id="reponse">
-
-	</p>
+<div class="container text-center">
+	<div class="col-sm">
+		<form method="POST">
+			{% csrf_token %}
+			<input type="text" name="guess" id="guess">
+			<input id="fetch-call" class="btn-primary" type="submit" value="Envoyer">
+			<div id="message"></div>
+		</form>
+	</div>
+	<div class="row overflow-auto" id="reponse">
+	</div>
 
 	<script>
 
@@ -23,6 +24,7 @@
 					event.preventDefault();
 
 					let form = new FormData();
+					let guess = document.querySelector("#guess").value;
 
 					form.append("guess", document.querySelector("#guess").value);
 
@@ -33,9 +35,13 @@
 					fetch(request)
 						.then(response => response.json())
 						.then(result => {
+									let msgP = document.querySelector("#message");
+									msgP.innerHTML = result["message"];
 									let resultParagraph = document.querySelector("#reponse");
-									resultParagraph.innerHTML = result["reponse"];
-								})
+									resultParagraph.innerHTML += "<div class='row'><p class='col-sm'>"+guess+"</p> <p class='col-sm'>"+result["reponse"]+"</p></div>";
+								});
+					document.getElementById('guess').value = '';
+
 				})
 
 	</script>
