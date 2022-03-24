@@ -15,6 +15,17 @@
 			<div id="message"></div>
 		</form>
 	</div>
+	<table class="table table-hover">
+		<tbody id="guess-table" >
+		{% for key, value in request.session.guesses.items %}
+		<tr>
+			<th scope="row">{{key}}</th>
+			<td>{{value}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
 	<div class="row overflow-auto" id="reponse">
 	</div>
 
@@ -35,10 +46,9 @@
 					fetch(request)
 						.then(response => response.json())
 						.then(result => {
-									let msgP = document.querySelector("#message");
-									msgP.innerHTML = result["message"];
-									let resultParagraph = document.querySelector("#reponse");
-									resultParagraph.innerHTML += "<div class='row'><p class='col-sm'>"+guess+"</p> <p class='col-sm'>"+result["reponse"]+"</p></div>";
+									new_row="<tr><th scope='row'>"+guess+"</th><td>"+result["reponse"]+"</td></tr>";
+									guess_tbl=document.getElementById("guess-table");
+									guess_tbl.innerHTML+=new_row;
 								});
 					document.getElementById('guess').value = '';
 

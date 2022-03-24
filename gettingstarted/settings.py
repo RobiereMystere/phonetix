@@ -116,4 +116,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 django_heroku.settings(locals())
