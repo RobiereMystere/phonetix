@@ -30,6 +30,8 @@ def index(request):
 
 def compute(request):
     guess = request.POST.get("guess")
+    if 'guesses' not in request.session.keys():
+        request.session['guesses'] = {}
 
     print(guess)
     if guess == "-abandon!":
@@ -46,7 +48,7 @@ def compute(request):
         guess_phon = guess_line[2]
         distance = levenshtein(mystery_word_phon, guess_phon)
         print(request.session.keys())
-        request.session['guesses'][guess] =  distance
+        request.session.get('guesses')[guess] =  distance
         request.session['guesses'] = OrderedDict(sorted(request.session['guesses'].items(), key=lambda t: t[1]))
         print(request.session['guesses'])
         return JsonResponse({"message":"","reponse": distance })
