@@ -116,7 +116,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 #SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
