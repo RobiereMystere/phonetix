@@ -45,6 +45,7 @@ def compute(request):
         guess_line = word_line[0]
         guess_phon = guess_line[2]
         distance = levenshtein(mystery_word_phon, guess_phon)
+        print(request.session.keys())
         request.session['guesses'][guess] =  distance
         request.session['guesses'] = OrderedDict(sorted(request.session['guesses'].items(), key=lambda t: t[1]))
         print(request.session['guesses'])
