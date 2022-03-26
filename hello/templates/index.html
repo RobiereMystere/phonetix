@@ -15,21 +15,27 @@
 			<div id="message"></div>
 		</form>
 	</div>
-	<table class="table table-hover">
-		<tbody id="guess-table" >
-		{% for key, value in request.session.guesses.items %}
-		<tr>
-			<th scope="row">{{key}}</th>
-			<td>{{value}}</td>
-		</tr>
-		{% endfor %}
-		</tbody>
-	</table>
+	<div id="table-score">
+		{% include "table.html" %}
+	</div>
 
 	<div class="row overflow-auto" id="reponse">
 	</div>
 
 	<script>
+		function getQuery(item) {
+					// Sends a request to the API endpoint to fetch data
+
+					let request = new XMLHttpRequest();
+					let method = 'GET';
+					let url = 'table/';
+					request.open(method, url);
+					request.onload = function () {
+								let myHTML = request.response;
+								document.getElementById('table-score').innerHTML = myHTML;
+							};
+					request.send();
+				}
 
 		document.querySelector("#fetch-call").addEventListener("click", event => {
 					event.preventDefault();
@@ -48,6 +54,7 @@
 						.then(result => {
 									new_row="<tr><th scope='row'>"+guess+"</th><td>"+result["reponse"]+"</td></tr>";
 									guess_tbl=document.getElementById("guess-table");
+									getQuery(0);
 									guess_tbl.innerHTML+=new_row;
 								});
 					document.getElementById('guess').value = '';

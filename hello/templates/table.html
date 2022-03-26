@@ -1,0 +1,10 @@
+<table class="table table-hover">
+	<tbody id="guess-table" >
+		{% for key, value in request.session.guesses.items %}
+		<tr>
+			<th scope="row">{{key}}</th>
+			<td>{{value}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

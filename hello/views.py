@@ -23,6 +23,9 @@ def index(request):
     if 'guesses' not in request.session.keys():
         request.session['guesses'] = {}
     context={'guesses':request.session['guesses']}
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        return render(request, 'table.html', context)
+
     return render(request, "index.html",context)
 
 
@@ -59,6 +62,12 @@ def compute(request):
         r="je ne connais pas le mot "+ guess
         return JsonResponse({"message" : r,
             "reponse": " <p>Distance à partir du mot vide : "+ str(empty_dist)+"</p>"})
+
+def table(request):
+
+    context={}
+    context['data'] = "reloading"
+    return render(request, "table.html", context)
 
 def db(request):
 
